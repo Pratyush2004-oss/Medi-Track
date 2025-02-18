@@ -3,10 +3,11 @@ import React from 'react'
 import Colors from '../../constant/Colors'
 import { auth } from '../../config/firebaseConfig'
 import { signOut } from 'firebase/auth'
-
+import { removeLocalStorage } from '../../service/storage'
 export default function HomeScreen() {
-  const OnSignOut = () => {
+  const OnSignOut = async () => {
     signOut(auth);
+    await removeLocalStorage('userDetails');
     ToastAndroid.show("Logout Successful", ToastAndroid.BOTTOM)
   }
   return (

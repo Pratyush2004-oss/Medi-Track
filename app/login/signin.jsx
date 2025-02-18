@@ -4,6 +4,7 @@ import Colors from '../../constant/Colors'
 import { useRouter } from 'expo-router'
 import { auth } from '../../config/firebaseConfig'
 import { signInWithEmailAndPassword } from 'firebase/auth'
+import { setLocalStorage } from '../../service/storage'
 
 export default function SigninPage() {
     const router = useRouter();
@@ -16,9 +17,10 @@ export default function SigninPage() {
             return;
         }
         signInWithEmailAndPassword(auth, email, password)
-            .then((userCredential) => {
+            .then(async (userCredential) => {
                 // Signed in 
                 const user = userCredential.user;
+                await setLocalStorage('userDetails', user);
                 ToastAndroid.show("Logged in Successfully", ToastAndroid.BOTTOM);
                 router.replace('(tabs)');
                 // ...

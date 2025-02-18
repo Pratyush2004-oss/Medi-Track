@@ -3,24 +3,26 @@ import React, { useState } from 'react'
 import Colors from '../../constant/Colors'
 import { useRouter } from 'expo-router'
 import { auth } from '../../config/firebaseConfig'
-import { createUserWithEmailAndPassword } from 'firebase/auth'
+import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth'
+import { setLocalStorage } from '../../service/storage'
 export default function SignupScreen() {
     const router = useRouter();
     const [fullName, setfullName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
-    const OnCreateAccount = () => {
+    const OnCreateAccount = async () => {
         if (!email || !password || !fullName) {
             ToastAndroid.show('Please fill all the fields', ToastAndroid.BOTTOM);
             Alert.alert('Error', 'Please fill all the fields');
             return;
         }
         createUserWithEmailAndPassword(auth, email, password)
-            .then((userCredential) => {
+            .then(async (userCredential) => {
                 // Signed up 
                 const user = userCredential.user;
-                console.log(user);
+                await updateProfile(user, { displayName: fullName });
+                await setLocalStorage('userDetails', user);
                 ToastAndroid.show('Account created successfully', ToastAndroid.BOTTOM);
                 router.push('(tabs)');
                 // ...
