@@ -2,8 +2,6 @@ import { StyleSheet, Text, View } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { Tabs, useRouter } from 'expo-router'
 import { FontAwesome } from '@expo/vector-icons'
-import { onAuthStateChanged } from 'firebase/auth'
-import { auth } from '../../config/firebaseConfig'
 import { getLocalStorage } from '../../service/storage'
 
 export default function TabLayout() {

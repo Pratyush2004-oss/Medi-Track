@@ -26,7 +26,6 @@ export const TypeList=[
 ]
 
 export const WhenToTake=[
-    'When To Take',
     'Morning',
     'Before Lunch',
     'After Lunch',
