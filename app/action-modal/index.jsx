@@ -10,6 +10,7 @@ import moment from 'moment'
 
 export default function MedicationActionModal() {
   const medicine = useLocalSearchParams();
+  console.log(medicine)
   const router = useRouter();
   const [loading, setloading] = useState(false);
 
@@ -38,7 +39,7 @@ export default function MedicationActionModal() {
       setloading(false);
     }
   }
-  return (
+  return medicine && (
     <View style={styles.container}>
       <Image source={require('../../assets/images/notification.gif')}
         style={styles.notification}
@@ -51,26 +52,34 @@ export default function MedicationActionModal() {
         <MedicationCard medicine={medicine} />
       </View>
 
-      <View style={styles.btnWrapper}>
-        <TouchableOpacity onPress={() => UpdateActionStatus('Missed')} style={[styles.btn, { borderColor: 'red' }]}>
-          <Ionicons name='close-circle-outline' size={30} color='red' />
-          {
-            loading ?
-              <ActivityIndicator size='small' color='red' />
-              :
-              <Text style={[styles.btnTxt, { color: 'red' }]}>Missed</Text>
-          }
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => UpdateActionStatus('Taken')} style={[styles.btn, { borderColor: 'green' }]}>
-          <Ionicons name='checkmark-circle-outline' size={30} color='green' />
-          {
-            loading ?
-              <ActivityIndicator size='small' color='green' />
-              :
-              <Text style={[styles.btnTxt, { color: 'green' }]}>Taken</Text>
-          }
-        </TouchableOpacity>
-      </View>
+      {
+        medicine.action ? (
+          <View style={styles.btnWrapper}>
+            <Text>You have not taken this medication</Text>
+          </View>
+        ) : (
+          <View style={styles.btnWrapper}>
+            <TouchableOpacity onPress={() => UpdateActionStatus('Missed')} style={[styles.btn, { borderColor: 'red' }]}>
+              <Ionicons name='close-circle-outline' size={30} color='red' />
+              {
+                loading ?
+                  <ActivityIndicator size='small' color='red' />
+                  :
+                  <Text style={[styles.btnTxt, { color: 'red' }]}>Missed</Text>
+              }
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => UpdateActionStatus('Taken')} style={[styles.btn, { borderColor: 'green' }]}>
+              <Ionicons name='checkmark-circle-outline' size={30} color='green' />
+              {
+                loading ?
+                  <ActivityIndicator size='small' color='green' />
+                  :
+                  <Text style={[styles.btnTxt, { color: 'green' }]}>Taken</Text>
+              }
+            </TouchableOpacity>
+          </View>
+        )
+      }
       <TouchableOpacity style={[styles.btn, { position: 'absolute', bottom: 20, borderWidth: 0 }]} onPress={() => router.back()}>
         <Ionicons name='close-circle' size={50} color={Colors.GRAY} />
       </TouchableOpacity>
