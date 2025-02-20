@@ -1,5 +1,5 @@
-import { StyleSheet, Text, View } from 'react-native'
-import React, { useEffect, useState } from 'react'
+import { StyleSheet } from 'react-native'
+import React, { useEffect } from 'react'
 import { Tabs, useRouter } from 'expo-router'
 import { FontAwesome } from '@expo/vector-icons'
 import { getLocalStorage } from '../../service/storage'
@@ -30,11 +30,11 @@ export default function TabLayout() {
                     )
                 }}
             />
-            <Tabs.Screen name='AddNew'
+            <Tabs.Screen name='History'
                 options={{
-                    tabBarLabel: 'Add New',
+                    tabBarLabel: 'History',
                     tabBarIcon: ({ color, size }) => (
-                        <FontAwesome name='plus' color={color} size={size} />
+                        <FontAwesome name='history' color={color} size={size} />
                     )
                 }}
             />

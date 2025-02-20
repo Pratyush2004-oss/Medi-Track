@@ -8,16 +8,18 @@ import { collection, getDocs, query, where } from 'firebase/firestore';
 import { db } from '../config/firebaseConfig';
 import MedicationCard from './MedicationCard';
 import EmptyState from './EmptyState';
+import { useRouter } from 'expo-router';
 
 export default function MedicationList() {
     const [medList, setmedList] = useState([]);
     const [dateRange, setdateRange] = useState();
     const [selectedDate, setselectedDate] = useState(moment().format('DD-MM-YYYY'));
     const [loading, setloading] = useState(false);
+    const router = useRouter();
     useEffect(() => {
         getDatesRangeList();
         getMedicationList(selectedDate);
-    }, []);
+    }, [selectedDate]);
 
     const getDatesRangeList = () => {
         const dateList = getDateRangeToDisplay();
@@ -37,7 +39,6 @@ export default function MedicationList() {
             querySnapshot.forEach((doc) => {
                 setmedList(prev => [...prev, doc.data()]);
             })
-
         } catch (error) {
             console.log(error)
         }
@@ -61,7 +62,6 @@ export default function MedicationList() {
                                 backgroundColor: item.formattedDate == selectedDate ? Colors.PRIMARY : Colors.LIGHT_PRIMARY,
                                 borderColor: item.formattedDate == selectedDate ? 'black' : Colors.LIGHT_PRIMARY,
                             }]} onPress={() => {
-                                getMedicationList(item.formattedDate);
                                 setselectedDate(item.formattedDate)
                             }}>
                                 <Text style={[styles.day, {
@@ -85,7 +85,16 @@ export default function MedicationList() {
                         showsVerticalScrollIndicator={false}
                         keyExtractor={(item) => item.docId}
                         renderItem={({ item }) => (
-                            <MedicationCard medicine={item} />
+                            <TouchableOpacity onPress={() => router.push({
+                                pathname: 'action-modal',
+                                params: {
+                                    ...item,
+                                    selectedDate: selectedDate
+                                }
+                            })
+                            }>
+                                <MedicationCard medicine={item} selectedDate={selectedDate} />
+                            </TouchableOpacity>
                         )
                         } />
                 ) : (

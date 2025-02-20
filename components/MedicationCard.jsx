@@ -1,13 +1,24 @@
-import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import React from 'react'
+import { Image, StyleSheet, Text, View } from 'react-native'
+import React, { useEffect, useState } from 'react'
 import Colors from '@/constant/Colors'
 import { Ionicons } from '@expo/vector-icons'
 
-export default function MedicationCard({ medicine }) {
+export default function MedicationCard({ medicine, selectedDate }) {
+    const [status, setstatus] = useState();
+    useEffect(() => {
+        checkStatus();
+    }, [medicine]);
+
+    const checkStatus = async () => {
+        const data = medicine?.action?.find((item) => item.date === selectedDate);
+        if (data) {
+            setstatus(data);
+        }
+    }
     return (
-        <TouchableOpacity style={styles.medicineContainer}>
+        <View style={styles.medicineContainer} >
             <View style={styles.subcontainer}>
-                <View style={{ marginRight: 15 }}>
+                <View style={{ marginRight: 10 }}>
                     <Image source={{ uri: medicine.type.icon }} style={styles.icon} />
                 </View>
                 <View>
@@ -20,7 +31,20 @@ export default function MedicationCard({ medicine }) {
                 <Ionicons name="timer-outline" size={30} color="black" />
                 <Text style={styles.time}>{medicine.remainderTime}</Text>
             </View>
-        </TouchableOpacity>
+
+            {
+                status && (
+                    <View style={styles.statusContainer}>
+                        {
+                            status.status === 'Taken' && <Ionicons name="checkmark-circle" size={30} color={Colors.GREEN} />
+                        }
+                        {
+                            status.status === 'Missed' && <Ionicons name="close-circle" size={30} color={'red'} />
+                        }
+                    </View>
+                )
+            }
+        </View>
     )
 }
 
@@ -30,10 +54,11 @@ const styles = StyleSheet.create({
         padding: 15,
         backgroundColor: Colors.LIGHT_PRIMARY,
         borderRadius: 15,
-        marginVertical: 5,
+        marginTop: 10,
         flexDirection: 'row',
         alignItems: 'center',
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
+        gap: 10,
     },
     icon: {
         height: 80,
@@ -48,7 +73,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     time: {
-        marginTop:2,
+        marginTop: 2,
         fontSize: 18,
         fontWeight: 'bold'
     },
@@ -62,5 +87,10 @@ const styles = StyleSheet.create({
     },
     font: {
         fontSize: 17
+    },
+    statusContainer: {
+        position: 'absolute',
+        top: 5,
+        left: 5
     }
 })
