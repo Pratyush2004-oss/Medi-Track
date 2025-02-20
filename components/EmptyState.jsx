@@ -3,6 +3,7 @@ import React from 'react'
 import Colors from '@/constant/Colors'
 import ConstantString from "../constant/ConstantString"
 import { useRouter } from 'expo-router';
+import AddNewMedicationRoute from './AddNewMedicationRoute';
 
 export default function EmptyState() {
     const router = useRouter();
@@ -12,9 +13,7 @@ export default function EmptyState() {
             <Text style={styles.title}>{ConstantString.NoMedication}</Text>
             <Text style={styles.description}>{ConstantString.MedicationSubText} </Text>
 
-            <TouchableOpacity style={styles.btn} onPress={() => router.push('/add-new-medication')}>
-                <Text style={styles.btnTxt}>{ConstantString.AddNewMediciationBtn}</Text>
-            </TouchableOpacity>
+            <AddNewMedicationRoute />
         </View>
     )
 }
@@ -40,16 +39,4 @@ const styles = StyleSheet.create({
         color: Colors.DARK_GRAY,
         marginTop: 10
     },
-    btn: {
-        backgroundColor: Colors.PRIMARY,
-        width: "100%",
-        padding: 15,
-        alignItems: 'center',
-        borderRadius: 10,
-        marginTop: 20
-    },
-    btnTxt: {
-        color: 'white',
-        fontSize: 18
-    }
 })

@@ -3,9 +3,11 @@ import React, { useEffect, useState } from 'react'
 import { getLocalStorage } from '../service/storage'
 import { Ionicons } from '@expo/vector-icons';
 import Colors from '@/constant/Colors';
+import { useRouter } from 'expo-router';
 
 export default function Header() {
     const [user, setuser] = useState();
+    const router = useRouter();
     useEffect(() => {
         getUserDetails();
     }, [])
@@ -20,8 +22,8 @@ export default function Header() {
                     <Image source={require('../assets/images/smiley.png')} style={styles.logo} />
                     <Text style={styles.title}>Hello {user.displayName} 👋🏼</Text>
                 </View>
-                <TouchableOpacity>
-                    <Ionicons name="settings-outline" size={28} color={Colors.DARK_GRAY} />
+                <TouchableOpacity onPress={() => router.push('/add-new-medication')}>
+                    <Ionicons name="medkit-outline" size={28} color={Colors.PRIMARY} />
                 </TouchableOpacity>
             </View>
         </View>
@@ -45,7 +47,7 @@ const styles = StyleSheet.create({
         height: 45
     },
     title: {
-        fontSize: 30,
+        fontSize: 25,
         fontWeight: 'bold'
     },
     image: {},

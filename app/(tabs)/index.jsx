@@ -1,15 +1,20 @@
-import { StyleSheet, Text, ToastAndroid, TouchableOpacity, View } from 'react-native'
-import React from 'react'
+import { FlatList, StyleSheet, View } from 'react-native'
+import React, { useState } from 'react'
 import Header from '../../components/Header'
-import EmptyState from '../../components/EmptyState'
+import MedicationList from "../../components/MedicationList";
 
 export default function HomeScreen() {
 
   return (
-    <View style={styles.container}>
-      <Header />
-      <EmptyState/>
-    </View>
+    <FlatList
+      data={[]}
+      ListHeaderComponent={
+        <View style={styles.container}>
+          <Header />
+          <MedicationList />
+        </View>
+      }
+    />
   )
 }
 

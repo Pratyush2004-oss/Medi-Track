@@ -27,6 +27,18 @@ export const getDatesRange = (startDate, endDate) => {
         dates.push(start.format("DD-MM-YYYY"));
         start.add(1, "days");
     }
-     
+
     return dates;
+}
+
+export const getDateRangeToDisplay = () => {
+    const dateList = [];
+    for (let i = 0; i < 7; i++) {
+        dateList.push({
+            date: moment().add(i, 'days').format('DD'),
+            day: moment().add(i, 'days').format('ddd'),
+            formattedDate: moment().add(i, 'days').format('DD-MM-YYYY'),
+        });
+    }
+    return dateList;
 }
