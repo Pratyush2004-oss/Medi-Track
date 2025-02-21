@@ -1,4 +1,4 @@
-import { Image, StyleSheet, Text, ToastAndroid, TouchableOpacity, View } from 'react-native'
+import { ActivityIndicator, Image, StyleSheet, Text, ToastAndroid, TouchableOpacity, View } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { getLocalStorage, removeLocalStorage } from '../../service/storage'
 import Colors from "../../constant/Colors";
@@ -6,21 +6,30 @@ import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 export default function Profile() {
   const [user, setuser] = useState();
+  const [loading, setloading] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
     getUser();
   }, [])
-  
+
   const getUser = async () => {
     const userInfo = await getLocalStorage('userDetails');
     setuser(userInfo);
   }
 
   const handleLogout = async () => {
-    await removeLocalStorage();
-    ToastAndroid.show('Logged out successfully', ToastAndroid.BOTTOM);
-    router.replace('/login');
+    try {
+      setloading(true);
+      await removeLocalStorage();
+      ToastAndroid.show('Logged out successfully', ToastAndroid.BOTTOM);
+      router.replace('login');
+    } catch (error) {
+      ToastAndroid.show("Something went wrong", ToastAndroid.BOTTOM);
+    }
+    finally {
+      setloading(false);
+    }
   }
   return user && (
     <View style={styles.mainContainer}>
@@ -39,12 +48,16 @@ export default function Profile() {
           <Ionicons style={styles.btnIcon} name="medkit" size={28} color={Colors.PRIMARY} />
           <Text style={styles.btnText}>My Medication</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.btn} onPress={() => router.push('history')}>
+        <TouchableOpacity style={styles.btn} onPress={() => router.push('History')}>
           <Ionicons style={styles.btnIcon} name="time" size={28} color={Colors.PRIMARY} />
           <Text style={styles.btnText}>History</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.btn} onPress={handleLogout}>
-          <Ionicons style={styles.btnIcon} name="log-out" size={28} color={Colors.PRIMARY} />
+          {loading ? (
+            <ActivityIndicator size="small" color="white" />
+          ) : (
+            <Ionicons style={styles.btnIcon} name="log-out" size={28} color={Colors.PRIMARY} />
+          )}
           <Text style={styles.btnText}>Logout</Text>
         </TouchableOpacity>
 

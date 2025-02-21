@@ -10,7 +10,12 @@ import moment from 'moment'
 
 export default function MedicationActionModal() {
   const medicine = useLocalSearchParams();
-  console.log(medicine)
+  if (medicine) {
+    medicine.type = JSON.parse(medicine.type);
+    if (medicine.action) {
+      medicine.action = JSON.parse(medicine.action);
+    }
+  }
   const router = useRouter();
   const [loading, setloading] = useState(false);
 
@@ -53,9 +58,14 @@ export default function MedicationActionModal() {
       </View>
 
       {
-        medicine.action ? (
+        medicine.action && medicine.action.find((item) => item.date === medicine.selectedDate) ? (
           <View style={styles.btnWrapper}>
-            <Text>You have not taken this medication</Text>
+            {
+              medicine.action.find((item) => item.date === medicine.selectedDate).status === 'Taken' ?
+                <Text style={{ color: 'green', fontSize: 18 }}>You have not taken this medication</Text>
+                :
+                <Text style={{ color: 'red', fontSize: 18 }}>You have missed this medication</Text>
+            }
           </View>
         ) : (
           <View style={styles.btnWrapper}>
