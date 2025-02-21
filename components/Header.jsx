@@ -20,7 +20,7 @@ export default function Header() {
             <View style={styles.mainContainer}>
                 <View style={styles.container}>
                     <Image source={require('../assets/images/smiley.png')} style={styles.logo} />
-                    <Text style={styles.title}>Hello {user.displayName} 👋🏼</Text>
+                    <Text style={styles.title}>Hello {user.displayName.split(' ')[0]} 👋🏼</Text>
                 </View>
                 <TouchableOpacity onPress={() => router.push('/add-new-medication')}>
                     <Ionicons name="medkit-outline" size={28} color={Colors.PRIMARY} />
