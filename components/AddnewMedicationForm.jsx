@@ -83,7 +83,7 @@ export default function AddnewMedicationForm() {
                 data={TypeList} key={(id) => id}
                 renderItem={({ item }) => (
                     <TouchableOpacity style={[styles.inputBtn, { backgroundColor: (formData && formData.type && item.name == formData.type.name) ? Colors.PRIMARY : Colors.LIGHT_PRIMARY }]} onPress={() => handleInputChange('type', item)}>
-                        <Text>{item.name}</Text>
+                        <Text style={{ color: (formData && formData.type && item.name == formData.type.name) ? 'white' : 'black' }}>{item.name}</Text>
                     </TouchableOpacity>
                 )}
                 style={styles.inputBtnWrappers}

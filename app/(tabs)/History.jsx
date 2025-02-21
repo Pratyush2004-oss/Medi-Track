@@ -79,7 +79,7 @@ export default function History() {
             )
           }
           {
-            (medList.length > 1) ? (
+            (medList.length > 0) ? (
               <FlatList
                 style={{ marginVertical: 10 }}
                 onRefresh={() => getMedicationList(selectedDate)}
