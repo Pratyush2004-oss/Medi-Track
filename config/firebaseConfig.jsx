@@ -7,12 +7,12 @@ import {getFirestore} from 'firebase/firestore';
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyDeHK80zZa75SDQQCPp4-bO_3LcENQUMvE",
-  authDomain: "react-native-apps-22ebd.firebaseapp.com",
-  projectId: "react-native-apps-22ebd",
-  storageBucket: "react-native-apps-22ebd.firebasestorage.app",
-  messagingSenderId: "209635075612",
-  appId: "1:209635075612:web:ead8b95e7650ce135d61d9"
+  apiKey: process.env.EXPO_PUBLIC_FIREBASE_API_KEY,
+  authDomain: process.env.EXPO_PUBLIC_FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.EXPO_PUBLIC_FIREBASE_PROJECT_ID,
+  storageBucket: process.env.EXPO_PUBLIC_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.EXPO_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.EXPO_PUBLIC_FIREBASE_APP_ID
 };
 
 // Initialize Firebase
