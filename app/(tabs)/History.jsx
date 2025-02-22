@@ -92,6 +92,8 @@ export default function History() {
                     pathname: 'action-modal',
                     params: {
                       ...item,
+                      type: JSON.stringify(item.type),
+                      action: JSON.stringify(item.action),
                       selectedDate: selectedDate
                     }
                   })

@@ -62,7 +62,7 @@ export default function MedicationActionModal() {
           <View style={styles.btnWrapper}>
             {
               medicine.action.find((item) => item.date === medicine.selectedDate).status === 'Taken' ?
-                <Text style={{ color: 'green', fontSize: 18 }}>You have not taken this medication</Text>
+                <Text style={{ color: 'green', fontSize: 18 }}>You have Taken this medication</Text>
                 :
                 <Text style={{ color: 'red', fontSize: 18 }}>You have missed this medication</Text>
             }
